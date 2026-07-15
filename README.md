@@ -1,6 +1,6 @@
 # Drop Offset Problem
 
-Research manuscript on the horizontal displacement of a freely dropped sphere on a rotating Earth, including Coriolis and centrifugal effects.
+This repository contains the paper, figures, and calculation code for a study of the horizontal displacement of a freely dropped sphere on a rotating Earth.
 
 ## Authors
 
@@ -29,14 +29,14 @@ The analysis includes:
 
 | Path | Description |
 | --- | --- |
-| `dropoffsetproblem.tex` | Main manuscript source and derivations |
-| `Drop Offset Problem.pdf` | Compiled manuscript included with the repository |
-| `image/` | Figures used in the manuscript |
+| `dropoffsetproblem.tex` | Main LaTeX source and derivations |
+| `Drop Offset Problem.pdf` | PDF version of the paper |
+| `image/` | Figures used in the paper |
 | `code/matlab/` | MATLAB scripts for calculations and plots |
 | `code/mathematica/` | Mathematica notebooks for symbolic and exploratory calculations |
 | `code/diagrams/` | Source files for the coordinate-system diagrams |
 | `reference.bib` | Bibliography database |
-| `elegantpaper.cls` | LaTeX document class used by the manuscript |
+| `elegantpaper.cls` | LaTeX document class used by the paper |
 | `archive/legacy_elegantpaper/` | Older template files retained for reference |
 
 ## Build
@@ -57,6 +57,4 @@ The PDF committed to the repository is the separately named file `Drop Offset Pr
 
 ## Citation
 
-Wu, T., He, Y., & Luo, H. (2025). *How far does a dropped sphere land from the point directly beneath its release position?* Research manuscript and computational materials. https://github.com/Monika-shipship/drop-offset-problem
-
-The work should be described as a research manuscript or project unless it has been formally published elsewhere.
+Wu, T., He, Y., & Luo, H. (2025). *How far does a dropped sphere land from the point directly beneath its release position?* https://github.com/Monika-shipship/drop-offset-problem
