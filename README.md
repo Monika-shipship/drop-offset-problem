@@ -8,6 +8,11 @@
 
 [Read the manuscript (PDF)](./Drop%20Offset%20Problem.pdf)
 
+## Contributors
+
+- **Hongyu Luo** - [GitHub profile: `@R-Honey114514`](https://github.com/R-Honey114514)
+- **Additional co-author** - collaborator without a public GitHub profile
+
 ## Research overview
 
 The project asks how far a sphere released from rest lands from the point directly below its release position. The model retains both Coriolis and centrifugal effects and studies how the horizontal offset depends on release height and latitude.
