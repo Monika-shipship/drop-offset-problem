@@ -1,0 +1,597 @@
+%!TEX program = pdflatex
+% Full chain: pdflatex -> biber/bibtex -> pdflatex -> pdflatex
+\documentclass[11pt,en]{elegantpaper}
+
+
+\title{How far does a dropped sphere land from the point directly beneath its release position?}
+\author{Author1 \\ Institute1 \and Author2 \\ Institute2}
+% \institute{\href{https://elegantlatex.org/}{Elegant\LaTeX{} 项目组}}
+
+% \version{0.11}
+\date{Jul. 12, 2025}
+
+% cmd for this doc
+\usepackage{array}
+\usepackage{tikz} 
+\usepackage{svg}
+\usepackage{subcaption} 
+\usepackage{float}
+\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
+
+\addbibresource[location=local]{reference.bib} % reference file,if u don't want,delete it
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	We analyze the horizontal displacement of a sphere that is released from rest in the rotating-Earth frame.
+	Starting from the full Newton–Coriolis equation, we first derive a compact order-of-magnitude estimate that clarifies which terms are relevant for typical laboratory heights.
+	An approximate analytic solution valid for $h\ll R$ is then compared with an exact Keplerian formulation that treats the drop as a short segment of an elliptic trajectory in an inertial frame.
+	The two approaches agree to within 0.5\% for $h \le 100\;\text{km}$.
+	The eastward and southward deflections cross over at a height $h_\times(\phi)$ that increases rapidly with latitude:
+	$h_\times\!\approx\!3.0\;\text{km}$ at $20^{\circ}$ N, $15.0\;\text{km}$ at $50^{\circ}$ N, and $24.5\;\text{km}$ at $80^{\circ}$ N.
+	Above $25\;\text{km}$, the motion is always east-dominant.
+	The results provide quantitative benchmarks for high-precision drop experiments and for classroom demonstrations of Coriolis effects.
+	\keywords{Coriolis deflection, free fall, Earth's rotation, latitude dependence, analytical mechanics}
+
+\end{abstract}
+% \begin{abstract}
+% 本文研究了在地球自转参考系中静止释放球体所产生的水平偏移。  
+% 从包含科里奥利项的完整牛顿方程出发，首先给出一种简洁的数量级估计，说明在典型实验高度下哪些项占主导作用。  
+% 随后推导了适用于 $h\ll R$ 的近似解析解，并将其与惯性系下“微段椭圆轨道”精确模型进行比较；二者在 $h\le 100\ \text{km}$ 范围内相对误差低于 0.5%。  
+% 东西与南北偏移相等的临界高度 $h_\times(\phi)$ 随纬度迅速升高：在 $20^{\circ}\text{N}$ 约为 $3.0\ \text{km}$，在 $50^{\circ}\text{N}$ 约为 $15.0\ \text{km}$，而在 $80^{\circ}\text{N}$ 则增至 $24.5\ \text{km}$。  
+% 当 $h>25\ \text{km}$ 时，偏移始终以东向分量为主。  
+% 这些结果可为高精度自由落体实验及课堂演示科里奥利效应提供定量基准。  
+% \keywords{科里奥利偏转；自由落体；地球自转；纬度依赖；解析力学}
+% \end{abstract}
+
+\section{Problem}
+% 地球以角速度 $\omega$ 自转，一质点在维度 $\phi$ 上空 $h$ 高度处自由下落。忽略空气阻力和惯性离心力。试求因科里奥利力和惯性离心力引起的落地点的偏离
+
+The Earth rotates with angular velocity $\omega$.  
+A point mass is released from rest at height $h$ above the Earth's surface at latitude $\phi$, and falls freely under gravity.  
+Air resistance is neglected, but both Coriolis and centrifugal forces due to Earth's rotation are retained.  
+Determine the horizontal displacement between the point of impact and the point vertically below the release position.
+
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.4\linewidth]{coordinate.pdf}
+	\caption{Global Cartesian frame $(x, y, z)$ fixed at the release point:
+		$x$ points east, $y$ north, and $z$ vertically upward.}
+	% \caption{以释放点为原点的全球笛卡尔坐标系 $(x,y,z)$：$x$ 轴指东，$y$ 轴指北，$z$ 轴竖直向上。}
+	\label{fig:coord}
+\end{figure}
+
+\section{Brief solution}
+% 如图 \ref{fig:coord}，我们沿用原书中的坐标系统和图示。设 $\vec{r}=(x,y,z),\vec{g}=(0,0,-g),\vec{\omega}=(0,\omega\cos\phi,\omega\sin\phi),\vec{R}=(0,0,R)$，其中 $R$ 为地球半径，$m$ 为质点质量。
+
+As shown in Fig.~\ref{fig:coord}, we continue to use the coordinate system and diagram from the original source.  
+We define the relevant vectors as follows:
+\[
+\vec{r} = (x, y, z), \quad
+\vec{g} = (0, 0, -g), \quad
+\vec{\omega} = (0, \omega\cos\phi, \omega\sin\phi), \quad
+\vec{R} = (0, 0, R)
+\]
+where $R$ is the Earth's radius, and $m$ is the mass of the particle.
+
+The equation of motion in the rotating reference frame is given by:
+\begin{equation}
+	m \vec{\ddot{r}} = m \vec{g} - m\vec{\omega} \times \left( \vec{\omega} \times (\vec{r} + \vec{R}) \right) - 2m \vec{\omega} \times \vec{v}
+\end{equation}
+
+It can be written in component form:
+\begin{equation} \label{eq:x}
+\ddot{x} = \omega^2 x - 2\omega \cos\phi\, \dot{z} + 2\omega \sin\phi\, \dot{y}
+\end{equation}
+
+\begin{equation} \label{eq:y}
+\ddot{y} = -\omega^2 \cos\phi \sin\phi\, (z+R) + \omega^2 \sin^2\phi\, y - 2\omega \cos\phi\, \dot{x}
+\end{equation}
+
+\begin{equation} \label{eq:z}
+\ddot{z} = -g + \omega^2 \cos^2\phi\, (z+R) - \omega^2 \cos\phi \sin\phi\, y + 2\omega \cos\phi\, \dot{x}
+\end{equation}
+
+\subsection{Order-of-magnitude analysis}
+
+We perform an order-of-magnitude analysis to determine which terms dominate the dynamics.
+
+Since the effects of Earth's rotation are relatively small compared to gravity,  
+the motion can be approximated as free fall to leading order.  
+Accordingly, the horizontal quantities
+\begin{equation*}
+x, \quad y, \quad \dot{x}, \quad \dot{y}
+\end{equation*}
+are all small compared to the vertical motion.
+
+
+The vertical velocity is approximately
+\[
+\dot{z} \sim \sqrt{2gh} \approx 44\;\mathrm{m/s} \quad \text{for }h = 100\;\mathrm{m}.
+\]
+
+We adopt the following typical parameter values:
+\[
+R \sim 6 \times 10^6\;\mathrm{m}, \quad
+\omega \sim 7 \times 10^{-5}\;\mathrm{rad/s}, \quad
+\omega^2 \sim 5 \times 10^{-9}\;\mathrm{rad^2/s^2}.
+\]
+
+Among the rotational terms, the component
+\[
+-\omega^2 \cos\phi \sin\phi\, R
+\]
+has a magnitude of approximately \( 0.03 \),  
+and thus cannot be neglected in the horizontal dynamics.
+
+
+The approximate equations:
+\begin{align}
+	\ddot{x} &= 2\omega \cos\phi\, \dot{z} \\
+	\ddot{y} &= -\omega^2 \cos\phi \sin\phi\, R - 2\omega \cos\phi\, \dot{x} \\
+	\ddot{z} &= -g + \omega^2 \cos^2\phi\, R
+\end{align}
+
+Solving the system of equations yields the result:
+\begin{align}
+	x(t) &= \frac{1}{3} \omega \cos\phi \left(g - \omega^2 \cos^2\phi R\right) t^3 \\
+	y(t) &= -\frac{1}{2} \omega^2 \cos\phi \sin\phi\, t^2 \left(g - \frac{1}{3}(g - \omega^2 \cos^2\phi R) t^2 \right) \\
+	z(t) &= -\frac{1}{2} \left(g - \omega^2 \cos^2\phi R \right) t^2
+\end{align}
+
+\subsection{Final answer}
+Substituting values (for a particle released at 100 meters and $40^{\circ}$ N) yields:
+\begin{itemize}
+	\item Southward deviation: $0.169286\;\mathrm{m}$
+	\item Eastward deviation: $0.0174786\;\mathrm{m}$
+	\item Time of flight: $4.517486941\;\mathrm{s}$
+\end{itemize}
+
+
+
+
+\section{Rigorous solution}
+
+As proposed by the authors, the problem can be solved rigorously using celestial mechanics. Specifically, we choose an inertial reference frame in which the Earth rotates with angular velocity $\omega$, and the particle is projected with an initial velocity of $\omega(R + h)$ from a height $h$ above the Earth's surface. At that moment, the point directly beneath the particle on the Earth's surface is referred to as the ground reference point $O$. 
+
+In this reference frame, the particle's trajectory and impact coordinates are relatively straightforward to determine. However, the complication arises because the Earth continues to rotate. To determine the final position of point $O$ at the time of landing, we must calculate the flight time of the particle. This requires evaluating an integral. While a numerical solution is possible, we provide an analytical integration method (presented in the appendix).
+
+In this analysis, we consider only the Northern Hemisphere. As shown in the diagram, we first establish three coordinate systems: the Cartesian $x y z$ system, the rotated frame $x^{*}y^{*}z^{*}$, and the spherical coordinate system, where the positive directions are eastward and northward.
+
+
+
+
+
+\begin{figure}[H]
+	\centering
+
+	\begin{minipage}[b]{0.45\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{coordinate2.pdf}
+		\caption{Orbital-plane construction in an inertial (non-rotating) reference frame.
+			The descent is treated as a short arc of an ellipse with perigee distance $R$ and eccentricity $e$.
+			Point $Q$ denotes the release position, $O$ the origin, and $P$ the impact point.}
+		% \caption{惯性参考系中的轨道平面示意。下落轨迹可视为椭圆轨道短弧，近地点距离为 $R$，偏心率为 $e$。$Q$ 为释放点，$O$ 为坐标原点，$P$ 为落地点。}
+
+		\label{fig:coord2}
+	\end{minipage}
+	\qquad
+	\begin{minipage}[b]{0.45\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{coordinate3.pdf}
+		\caption{Rotated frame $(x^{*},y^{*},z^{*})$ obtained from the local $(x,y,z)$ frame by a pitch rotation of angle $\phi$.
+		Points $Q$, $O$, and $P$ mark the release position, the origin, and the impact point, respectively.
+		The particle’s motion is entirely confined to the $x^{*}y^{*}$-plane.}
+		% \caption{坐标系 $xyz$ 通过俯仰角 $\phi$ 旋转得到坐标系 $(x^{*}, y^{*}, z^{*})$，其中 $Q$、$O$、$P$ 分别为释放点、坐标原点和落地点，质点的运动完全位于 $x^{*}y^{*}$ 平面内。}
+		\label{fig:coord3}
+	\end{minipage}
+\end{figure}
+
+
+
+% \begin{figure}[htbp]
+% 	\centering
+
+% 	\begin{subfigure}[b]{0.45\linewidth}
+% 		\centering
+% 		\includegraphics[width=\linewidth]{coordinate2.pdf}
+% 		\caption{coordinate2 }
+% 	\end{subfigure}
+% 	\hfill
+% 	\begin{subfigure}[b]{0.45\linewidth}
+% 		\centering
+% 		\includegraphics[width=\linewidth]{coordinate3.pdf}
+% 		\caption{coordinate3 }
+% 	\end{subfigure}
+
+% 	\caption{figure}
+% \end{figure}
+
+\section{Rigorous solution}
+
+\subsection{Preparation for Calculation}
+
+We provide the transformation relations between the rotated coordinate system $x^{*}y^{*}z^{*}$ and the original Cartesian system $x, y, z$. The coordinates in the original system can be expressed in terms of the rotated system as:
+
+\begin{equation}
+    \begin{pmatrix} 
+    x \\ 
+    y \\ 
+    z 
+    \end{pmatrix} = 
+    \begin{pmatrix}
+        \cos\phi & 0 & -\sin\phi \\
+        0 & 1 & 0 \\
+        \sin\phi & 0 & \cos\phi
+    \end{pmatrix}
+    \begin{pmatrix} 
+    x^{*} \\ 
+    y^{*} \\ 
+    z^{*} 
+    \end{pmatrix}
+    = \begin{pmatrix} 
+    x^{*} \cos\phi - z^{*} \sin\phi \\
+    y^{*} \\
+    x^{*} \sin\phi + z^{*} \cos\phi
+    \end{pmatrix}
+\end{equation}
+
+\vspace{2em}
+
+Thus, the trajectory of the particle lies in the plane defined by the $x^{*}$ and $y^{*}$ axes.
+
+\newpage
+
+Next, we turn to the calculation of the energy and angular momentum of the particle. These are given by:
+
+\begin{equation}
+    E = \frac{1}{2} m (R + h)^{2} \omega^{2} \cos^{2} \phi, \quad
+    L = m (R + h)^{2} \omega \cos \phi
+\end{equation}
+
+From these, we can derive the orbital parameters as follows:
+\begin{enumerate}
+    \item The orbit in the system $x^{*}y^{*}z^{*}$:
+    \[
+    r = \frac{e}{1 + \cos(\pi + \alpha)} = \frac{p}{1 - e \cos\alpha}
+    \]
+    \item Orbital semi-major axis:
+    \[
+    a = \frac{GMm}{-2E} = \frac{GM(R + h)}{2GM - (R + h)^3 \omega^2 \cos^2 \phi}
+    \]
+    \item Orbital semi-minor axis:
+    \[
+    b = \sqrt{\frac{L^2}{-2mE}} = \sqrt{\frac{(R + h)^5 \omega^2 \cos^2 \phi}{2GM - (R + h)^3 \omega^2 \cos^2 \phi}}
+    \]
+    \item The semi-focal distance $c$:
+    \[
+    c = \sqrt{a^2 - b^2}, \quad e = \frac{c}{a}, \quad p = \frac{b^2}{a}
+    \]
+\end{enumerate}
+
+In Figure~\ref{fig:coord3}, the coordinates of the landing point in the rotated frame $(x^*, y^*, z^*)$ are
+\[
+P(x^*, y^*, z^*) = (R \cos \alpha_1,\, R \sin \alpha_1,\, 0).
+\]
+
+Transforming back to the original Cartesian coordinates $(x, y, z)$ gives
+\[
+P(x, y, z) = (R \cos \alpha_1 \cos \phi,\, R \sin \alpha_1,\, R \cos \alpha_1 \sin \phi).
+\]
+
+Converting to spherical coordinates $(r, \theta, \varphi)$, we obtain:
+\[
+P_{\text{final}} = \left(
+R,\,
+\arctan\left( \frac{\sin \alpha_1}{\cos \alpha_1 \cos \phi} \right),\,
+\arctan\left( \frac{\cos \alpha_1 \sin \phi}{\sqrt{\sin^2 \alpha_1 + \cos^2 \alpha_1 \cos^2 \phi}} \right)
+\right).
+\]
+
+Here, $\alpha_1$ is defined as the angle between the landing point and the release point, as shown in Figure~\ref{fig:coord3}. It is determined from the conic section equation:
+\[
+R = \frac{p}{1 - e \cos \alpha_1} \quad \Rightarrow \quad \alpha_1 = \arccos\left( \frac{R - p}{R e} \right).
+\]
+
+
+\subsection{Trajectory and Earth Rotation}
+
+We now determine the time of flight $\Delta T$ using the sector area swept by the radius vector in the orbital plane:
+
+\begin{align}
+    \Delta T 
+    &= \frac{\Delta S}{L/(2m)} 
+    = \frac{\frac{1}{2} \int_{0}^{\alpha_1} \left( \frac{p}{1 - e \cos\alpha} \right)^2 \mathrm{d}\alpha}
+            {\frac{1}{2}(R + h)^2 \omega \cos\phi} \\
+    &= \frac{p^2}{(R + h)^2 \omega \cos\phi} \cdot \frac{1}{1 - e^2} \cdot 
+       \left(
+           \frac{e \sin\alpha_1}{1 - e \cos\alpha_1} +
+           \frac{2}{\sqrt{1 - e^2}} \arctan\left(
+               \sqrt{\frac{1 + e}{1 - e}} \tan\left( \frac{\alpha_1}{2} \right)
+           \right)
+       \right)
+\end{align}
+
+For convenience, we describe both the ground reference point and the particle in spherical coordinates.
+
+The ground reference point moves due to Earth’s rotation:
+\[
+O_{\text{start}} = (R,\, 0,\, \phi) 
+\quad \rightarrow \quad 
+O_{\text{final}} = (R,\, \omega \Delta T,\, \phi)
+\]
+
+The particle moves from its release position to its impact point:
+\[
+P_{\text{start}} = (R + h,\, 0,\, \phi) 
+\quad \rightarrow \quad 
+P_{\text{final}} = \left(
+R,\,
+\arctan\left( \frac{\sin \alpha_1}{\cos \alpha_1 \cos \phi} \right),\,
+\arctan\left( \frac{\cos \alpha_1 \sin \phi}
+{\sqrt{\sin^2 \alpha_1 + \cos^2 \alpha_1 \cos^2 \phi}} \right)
+\right)
+\]
+
+The difference between these two spherical coordinates yields the angular displacement,  
+which can then be converted into a linear offset by multiplying by the appropriate radius.
+
+
+\subsection{Final answer}
+
+East-west deviation (defined as positive to the east):
+\begin{align}
+    (\theta_{P_\text{final}} - \omega \Delta T)R\cos\phi 
+    &= R\cos\phi \left( 
+        \arctan\left( \frac{\tan\alpha_1}{\cos\phi} \right) 
+        - \frac{p^2}{(R + h)^2 \cos\phi} \cdot \frac{1}{1 - e^2}
+    \right. \notag \\[3pt]
+    &\quad\left.
+        \cdot \left[
+            \frac{e\sin\alpha_1}{1 - e\cos\alpha_1}
+            + \frac{2}{\sqrt{1 - e^2}} 
+              \arctan\left( 
+                \sqrt{\frac{1 + e}{1 - e}} \tan\left( \frac{\alpha_1}{2} \right)
+              \right)
+        \right]
+    \right)
+\end{align}
+
+
+\vspace{1em}
+
+North-south deviation (defined as positive to the north):
+\begin{align}
+    (\phi_{P_\text{final}} - \phi)R 
+    &= \left( 
+        \arctan\left( \frac{\cos\alpha_1\sin\phi}{\sqrt{\sin^{2}\alpha_1+\cos^{2}\alpha_1\cos^{2}\phi}} \right)
+        - \phi 
+    \right) R \\[5pt]
+    &= \left(
+        \arctan\left( \frac{\sin\phi}{\sqrt{\tan^{2}\alpha_1+\cos^{2}\phi}} \right)
+        - \phi 
+    \right) R
+\end{align}
+
+\vspace{1em}
+
+Key quantities:
+\begin{align}
+    a &= \frac{GM(R + h)}{2GM - \omega^2(R + h)^3 \cos^2\phi} \\[5pt]
+    b &= \sqrt{ \frac{\omega^2 (R + h)^5 \cos^2\phi}{2GM - \omega^2(R + h)^3 \cos^2\phi} } \\[5pt]
+    p &= \frac{b^2}{a} = \frac{ \omega^2 (R + h)^5 \cos^2\phi }{2GM - \omega^2(R + h)^3 \cos^2\phi}
+\end{align}
+
+\begin{align}
+    \alpha_1 
+    &= \arccos\left( \frac{R - p}{eR} \right)
+    = \arccos\left( \frac{R - \frac{b^2}{a}}{R \sqrt{1 - \frac{b^2}{a^2}}} \right) \\[5pt]
+    &= \arccos\left(
+        \frac{R - \frac{b^2}{\frac{GM (R + h)}{2GM - \omega^2 (R + h)^3 \cos^2\phi}}}
+        {R \sqrt{1 - 
+        \frac{\omega^2 (R + h)^5 \cos^2\phi}
+        {\frac{(2GM(R + h))(2GM - \omega^2 (R + h)^3 \cos^2\phi)}{2GM - \omega^2 (R + h)^3 \cos^2\phi}}}} 
+    \right)
+\end{align}
+
+
+\paragraph{Numerical evaluation.}
+
+We now substitute numerical values into the final expressions to obtain quantitative results.  
+Using the parameter values  
+\[
+R = 6.37101 \times 10^6\, \mathrm{m}, \quad 
+\omega = \frac{2\pi}{24 \times 3600}\, \mathrm{rad/s}, \quad 
+M = 5.9722 \times 10^{24}\, \mathrm{kg},
+\]
+we evaluate the result for a release height of $100\, \mathrm{m}$ at latitude $40^\circ$\,N (e.g., Beijing):
+
+\begin{itemize}
+    \item Southward deviation: \quad $0.1693\ \mathrm{m}$
+    \item Eastward deviation: \quad\ \ $0.0168\ \mathrm{m}$
+    \item Time of flight: \quad\quad\ \ \ $4.5176\ \mathrm{s}$
+\end{itemize}
+
+
+
+
+\subsection{What happens if the values of $h$ and $\phi $ are different?}
+\noindent The results for additional parameter sets are summarised below.As figure  \ref{fig:h=100m},\ref{fig:h=1000m},\ref{fig:h=10000m},\ref{fig:h=25000m},\ref{fig:h=100000m}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{h=100.pdf}
+	\caption{Latitude dependence of the deviation at a release height of 100\,m}
+	\label{fig:h=100m}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{h=1000.pdf}
+	\caption{Latitude dependence of the deviation at a release height of 1000\,m}
+	\label{fig:h=1000m}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{h=10000.pdf}
+	\caption{Latitude dependence of the deviation at a release height of 10000\,m}
+	\label{fig:h=10000m}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{h=25000.pdf}
+	\caption{Latitude dependence of the deviation at a release height of 25000\,m}
+	\label{fig:h=25000m}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{h=100000.pdf}
+	\caption{Latitude dependence of the deviation at a release height of 100000\,m}
+	\label{fig:h=100000m}
+\end{figure}
+
+
+\subsection{Eastward vs. Southward Deviation: Key Drivers}
+We define $f(h,\varphi)$ as the east–west deviation (positive eastward) and $g(h,\varphi)$ as the north–south deviation (positive northward).
+To obtain an initial overview of their behaviour, we tabulate numerical values of $f$ and $g$ for several latitudes$\phi$.
+Each row of the table lists, in sequence, the release height, $f(h,\phi)$, $g(h,\phi)$, and the sum $f(h,\phi)+g(h,\phi)$.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Sample heights around the root of $f(h,\phi)+g(h,\phi)\!=\!0$ (values in metres)}
+	\small  % 视排版需要可删掉
+	\begin{subtable}[t]{0.32\textwidth}
+		\centering
+		\caption{$\phi = 20^{\circ}\mathrm{N}$}
+		\begin{tabular}{rrrr}
+			\toprule
+			Height         & $f(h,\phi)$   & $g(h,\phi)$    & $f+g$         \\
+			\midrule
+			1              & 0.00          & -0.00          & -0.00         \\
+			1 000          & 0.65          & -1.11          & -0.46         \\
+			1 894          & 1.70          & -2.10          & -0.40         \\
+			\textbf{2 894} & \textbf{3.21} & \textbf{-3.21} & \textbf{0.00} \\
+			3 894          & 5.00          & -4.31          & 0.69          \\
+			25 500         & 84.01         & -28.55         & 55.47         \\
+			\bottomrule
+		\end{tabular}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[t]{0.32\textwidth}
+		\centering
+		\caption{$\phi = 50^{\circ}\mathrm{N}$}
+		\begin{tabular}{rrrr}
+			\toprule
+			Height            & $f(h,\phi)$    & $g(h,\phi)$     & $f+g$         \\
+			\midrule
+			1                 & 0.00           & -0.00           & -0.00         \\
+			1 000             & 0.44           & -1.69           & -1.25         \\
+			13 671.5          & 22.48          & -23.28          & -0.80         \\
+			\textbf{14 671.5} & \textbf{24.99} & \textbf{-24.99} & \textbf{0.00} \\
+			15 671.5          & 27.59          & -26.71          & 0.89          \\
+			25 500            & 57.33          & -43.66          & 13.67         \\
+			\bottomrule
+		\end{tabular}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[t]{0.32\textwidth}
+		\centering
+		\caption{$\phi = 80^{\circ}\mathrm{N}$}
+		\begin{tabular}{rrrr}
+			\toprule
+			Height            & $f(h,\phi)$    & $g(h,\phi)$     & $f+g$         \\
+			\midrule
+			1                 & 0.00           & -0.00           & -0.00         \\
+			1 000             & 0.12           & -0.59           & -0.47         \\
+			23 459.5          & 13.64          & -13.92          & -0.28         \\
+			\textbf{24 459.5} & \textbf{14.52} & \textbf{-14.52} & \textbf{0.00} \\
+			25 459.5          & 15.42          & -15.12          & 0.30          \\
+			25 500            & 15.46          & -15.14          & 0.31          \\
+			\bottomrule
+		\end{tabular}
+	\end{subtable}
+\end{table}
+
+
+% 其中 $f(h,\phi)+g(h,\phi)$ 的正负性代表着东偏和南偏哪个的效应更大，显然当$f(h,\phi)+g(h,\phi)$大于零时，东偏效应更明显
+% 	所以我们就来解方程$f(h,\phi)+g(h,\phi)=0$，得到 $h=h(\phi)$ ，即得到了东偏和南偏效应相同时的曲线，如下图
+% 在此曲线的下方（即阴影处），南偏效应更明显（这一点可以由之前的表格得出）
+% 	在此曲线的上方（即阴影部分上方），东偏效应更明显
+% 	特别的，在大于 $25000 \text{m}$时，始终有东偏效应更明显
+\noindent
+The sign of \(f(h,\phi)+g(h,\phi)\) reveals which contribution—eastward or southward—dominates the overall deflection.%
+\footnote{Positive values indicate a larger eastward component, whereas negative values imply a larger southward component.}
+Accordingly, we solve the balance equation
+\[
+	f(h,\phi)+g(h,\phi)=0
+\]
+to obtain an implicit function \(h=h(\phi)\).
+This curve (illustrated below) marks the locus where the eastward and southward deviations are equal in magnitude.
+\begin{itemize}
+	\item \textbf{Below} the curve (shaded area) the southward deflection is larger, consistent with the numerical tables given earlier.
+	\item \textbf{Above} the curve the eastward deflection predominates.
+	\item In particular, for heights exceeding \(25\,000\ \text{m}\) the eastward component is dominant at all latitudes considered.
+\end{itemize}
+
+
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\linewidth]{h_root_vs_phi.pdf}
+	\caption{Phase diagram indicating whether the eastward or the southward deflection is dominant}
+\end{figure}
+
+
+% \subsection{在地面上观测到的图像}
+% 最后，我们研究一下，在各个纬度上，一系列高度的小球释放后，在地面上形成的轨迹，如下图
+\subsection{Ground-level footprints}
+
+Finally, we examine the trajectories recorded on the ground when a series of spheres is released from different heights at various latitudes.
+The resulting ground-track patterns are presented in the following figure.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\linewidth]{deviation_parametric_phi40h25000.pdf}
+	\caption{Ground-level tracks of spheres released from rest (Earth-fixed frame) at successive altitudes}
+\end{figure}
+
+
+
+
+\printbibliography[heading=bibintoc, title=\ebibname]
+
+\appendix
+% \appendixpage
+\section{Integrator process}
+ (Feynman's technique of integration - differentiating under the integral sign)
+Let $I_K=\int \frac{1}{(e \cos (\alpha )+1)^K} \, \mathrm{d}\alpha$
+We can get \begin{align*}
+	I_1 & =\int \frac{1}{e \cos (\alpha )+1} \, \mathrm{d}\alpha                                                                                                                                                                                                                                                           \\
+	    & =\int \frac{2 \left(\sin ^2\left(\frac{\alpha }{2}\right)+\cos ^2\left(\frac{\alpha }{2}\right)\right)}{\sin ^2\left(\frac{\alpha }{2}\right)+\cos ^2\left(\frac{\alpha }{2}\right)+2 e \left(\cos ^2\left(\frac{\alpha }{2}\right)-\sin ^2\left(\frac{\alpha }{2}\right)\right)} \, \mathrm{d}\frac{\alpha }{2} \\
+	    & =\int \frac{2 \left(\tan ^2\left(\frac{\alpha }{2}\right)+1\right)}{\tan ^2\left(\frac{\alpha }{2}\right)+2 e \left(1-\tan ^2\left(\frac{\alpha }{2}\right)\right)+1} \, \mathrm{d}\frac{\alpha }{2}                                                                                                             \\
+	    & =2 \int \frac{1}{(1-e) \tan ^2\left(\frac{\alpha }{2}\right)+e+1} \, \mathrm{d}\tan \left(\frac{\alpha }{2}\right)                                                                                                                                                                                               \\
+	    & =\frac{2 \arctan\left(\sqrt{\frac{1-e}{e+1}} \tan \left(\frac{\alpha }{2}\right)\right)}{\sqrt{1-e^2}}
+\end{align*}
+\begin{align*}
+	\frac{\mathrm{d}I_K}{\mathrm{d}e}= & \int \frac{\partial }{\partial e}\frac{1}{(e \cos (\alpha )+1)^K} \, \mathrm{d}\alpha                                                       \\
+	                 & =^{\text{(When the limits of integration are independent of e)}}                                                                   \\
+	                 & =-\frac{k \int \frac{e \cos (\alpha )+1-1}{(e \cos (\alpha )+1)^{K+1}} \, \mathrm{d}\alpha }{e}                                             \\
+	                 & =-\frac{k \left(\int \frac{1}{(e \cos (\alpha )+1)^K} \, \mathrm{d}\alpha -\int \frac{1}{(e \cos (\alpha )+1)^{K+1}} \, \mathrm{d}\alpha \right)}{e} \\
+	                 & =-\frac{k \left(I_K-I_{K+1}\right)}{e}
+\end{align*}
+So $I_{K+1}=\frac{e}{k}\frac{ \mathrm{d}I_K}{ \mathrm{d}e}+I_K$\\
+Once the recurrence relation is given, each subsequent term can be calculated.\\
+Here we present the $I_2$:
+\begin{align*}
+	I_2 & =e \frac{ \mathrm{d}I_1}{\mathrm{d}e}+I_1                                                                                                                                                                                                                                                                                                                            \\
+	    & =\frac{2 \arctan\left(\sqrt{\frac{1-e}{e+1}} \tan \left(\frac{\alpha }{2}\right)\right)}{\sqrt{1-e^2}}                                                                                                                                                                                                                                                               \\ \notag
+	    & +e \left(\frac{2 e \arctan\left(\sqrt{\frac{1-e}{e+1}} \tan \left(\frac{\alpha }{2}\right)\right)}{\left(1-e^2\right)^{3/2}}+\frac{\left(-\frac{1-e}{(e+1)^2}-\frac{1}{e+1}\right) \tan \left(\frac{\alpha }{2}\right)}{\sqrt{\frac{1-e}{e+1}} \sqrt{1-e^2} \left(\frac{(1-e) \tan ^2\left(\frac{\alpha }{2}\right)}{e+1}+1\right)}\right)                           \\
+	    & =\frac{2 \arctan\left(\sqrt{\frac{1-e}{e+1}} \tan \left(\frac{\alpha }{2}\right)\right)}{\sqrt{1-e^2}}                                                                                                                                                                                                                                                               \\ \notag
+	    & +e \left(\frac{2 e \arctan\left(\frac{(1-e) \tan \left(\frac{x}{2}\right)}{\sqrt{1-e^2}}\right)}{\left(1-e^2\right)^{3/2}}+\frac{2 \left(\frac{(1-e) e \tan \left(\frac{x}{2}\right)}{\left(1-e^2\right)^{3/2}}-\frac{\tan \left(\frac{x}{2}\right)}{\sqrt{1-e^2}}\right)}{\sqrt{1-e^2} \left(\frac{(1-e)^2 \tan ^2\left(\frac{x}{2}\right)}{1-e^2}+1\right)}\right) \\
+	    & =\frac{2 \sqrt{1-e^2} \arctan\left(\frac{\sqrt{1-e} \tan \left(\frac{\alpha }{2}\right)}{\sqrt{e+1}}\right)+\frac{e \left(e^2-1\right) \sin (\alpha )}{e \cos (\alpha )+1}}{\left(1-e^2\right)^2}                                                                                                                                                                    \\
+	    & =\frac{\frac{2 \arctan\left(\sqrt{\frac{1-e}{e+1}} \tan \left(\frac{\alpha _1}{2}\right)\right)}{\sqrt{1-e^2}}-\frac{e \sin \left(\alpha _1\right)}{e \cos \left(\alpha _1\right)+1}}{1-e^2}
+\end{align*}
+Similarly, the following items can be obtained.
+\addappheadtotoc
+
+\end{document}

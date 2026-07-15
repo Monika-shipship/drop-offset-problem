@@ -1,0 +1,26 @@
+# LaTeX intermediate files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.xdv
+*-SAVE-ERROR
+
+# Editor and operating-system files
+*.bak
+*.sav
+*.tmp
+*.asv
+*.nb~
+*~
+.DS_Store
+Thumbs.db
